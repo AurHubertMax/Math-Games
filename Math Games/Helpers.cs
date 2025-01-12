@@ -19,34 +19,36 @@ namespace Math_Games
             Console.WriteLine("----------------------------------------");
             foreach (var game in games)
             {
-                Console.WriteLine($"{game.Date} - {game.Type}: {game.Score} points");
+                Console.WriteLine($"{game.Date} - {game.Type} - {game.GameDifficulty}: {game.Score} points in {game.ElapsedTime}s");
             }
             Console.WriteLine("----------------------------------------\n");
             Console.WriteLine("Press any key to go back to the main menu");
             Console.ReadLine();
         }
 
-        internal static void AddToHistory(int score, GameType game)
+        internal static void AddToHistory(int score, GameType game, Difficulty GameDiff, TimeSpan elapsed)
         {
             games.Add(new Game
             {
                 Score = score,
                 Date = DateTime.Now,
-                Type = game
+                Type = game,
+                GameDifficulty = GameDiff,
+                ElapsedTime = elapsed
             });
         }
 
-        internal static int[] GetDivisionNumbers()
+        internal static int[] GetDivisionNumbers(int multiplier)
         {
             var random = new Random();
-            var first_number = random.Next(1, 99);
-            var second_number = random.Next(1, 99);
+            var first_number = random.Next(1 * multiplier, 99 * multiplier);
+            var second_number = random.Next(1 * multiplier, 99 * multiplier);
             var result = new int[2];
 
             while (first_number % second_number != 0)
             {
-                first_number = random.Next(1, 99);
-                second_number = random.Next(1, 99);
+                first_number = random.Next(1 * multiplier, 99 * multiplier);
+                second_number = random.Next(1 * multiplier, 99 * multiplier);
             }
 
 
@@ -77,6 +79,34 @@ namespace Math_Games
                 name = Console.ReadLine();
             }
             return name;
+        }
+
+        internal static object GetGameDifficulty()
+        {
+            Console.Clear();
+            Console.WriteLine("Select difficulty level");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("1 - Easy");
+            Console.WriteLine("2 - Medium");
+            Console.WriteLine("3 - Hard");
+            Console.WriteLine("--------------------------------------");
+            var difficulty = Console.ReadLine();
+            switch (difficulty)
+            {
+                case "1":
+                    return Difficulty.Easy;
+                case "2":
+                    return Difficulty.Medium;
+                case "3":
+                    return Difficulty.Hard;
+                default:
+                    while (difficulty != "1" && difficulty != "2" && difficulty != "3")
+                    {
+                        Console.WriteLine("Invalid input. Please Try again:");
+                        difficulty = Console.ReadLine();
+                    }
+                    return difficulty;
+            }
         }
     }
 }

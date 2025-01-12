@@ -1,4 +1,5 @@
-﻿using Math_Games.Models;
+﻿using System.Diagnostics;
+using Math_Games.Models;
 
 namespace Math_Games
 {
@@ -10,7 +11,12 @@ namespace Math_Games
             int first_number;
             int second_number;
             int score = 0;
+            var stopwatch = new Stopwatch();
 
+            Difficulty game_difficulty = (Difficulty)Helpers.GetGameDifficulty();
+            int multiplier = game_difficulty == Difficulty.Easy ? 1 : game_difficulty == Difficulty.Medium ? 10 : 100;
+
+            stopwatch.Start();
             for (int i = 0; i < 5; i++)
             {
                 Console.Clear();
@@ -35,10 +41,11 @@ namespace Math_Games
                     Console.ReadLine();
                 }
             }
+            stopwatch.Stop();
 
             Console.WriteLine($"your score is: {score}");
             Console.ReadLine();
-            Helpers.AddToHistory(score, GameType.Modulus);
+            Helpers.AddToHistory(score, GameType.Modulus, game_difficulty, stopwatch.Elapsed);
         }
 
         internal void DivisionGame()
@@ -47,12 +54,17 @@ namespace Math_Games
             int first_number;
             int second_number;
             int score = 0;
+            var stopwatch = new Stopwatch();
 
+            Difficulty game_difficulty = (Difficulty)Helpers.GetGameDifficulty();
+            int multiplier = game_difficulty == Difficulty.Easy ? 1 : game_difficulty == Difficulty.Medium ? 10 : 100;
+
+            stopwatch.Start();
             for (int i = 0; i < 5; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Division selected");
-                var division_numbers = Helpers.GetDivisionNumbers();
+                var division_numbers = Helpers.GetDivisionNumbers(multiplier);
                 first_number = division_numbers[0];
                 second_number = division_numbers[1];
 
@@ -74,10 +86,11 @@ namespace Math_Games
                     Console.ReadLine();
                 }
             }
+            stopwatch.Stop();
 
             Console.WriteLine($"your score is: {score}");
             Console.ReadLine();
-            Helpers.AddToHistory(score, GameType.Division);
+            Helpers.AddToHistory(score, GameType.Division, game_difficulty, stopwatch.Elapsed);
         }
 
         internal void MultiplicationGame()
@@ -86,13 +99,18 @@ namespace Math_Games
             int first_number;
             int second_number;
             int score = 0;
+            var stopwatch = new Stopwatch();   
 
+            Difficulty game_difficulty = (Difficulty)Helpers.GetGameDifficulty();
+            int multiplier = game_difficulty == Difficulty.Easy ? 1 : game_difficulty == Difficulty.Medium ? 10 : 100;
+
+            stopwatch.Start();
             for (int i = 0; i < 5; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Multiplication selected");
-                first_number = random.Next(1, 9);
-                second_number = random.Next(1, 9);
+                first_number = random.Next(1 * multiplier, 9 * multiplier);
+                second_number = random.Next(1 * multiplier, 9 * multiplier);
                 Console.WriteLine($"{first_number} * {second_number} : ");
                 var result = Console.ReadLine();
 
@@ -111,10 +129,11 @@ namespace Math_Games
                     Console.ReadLine();
                 }
             }
+            stopwatch.Stop();
 
             Console.WriteLine($"your score is: {score}");
             Console.ReadLine();
-            Helpers.AddToHistory(score, GameType.Multiplication);
+            Helpers.AddToHistory(score, GameType.Multiplication, game_difficulty, stopwatch.Elapsed);
         }
 
         internal void SubtractionGame()
@@ -123,13 +142,18 @@ namespace Math_Games
             int first_number;
             int second_number;
             int score = 0;
+            var stopwatch = new Stopwatch();
 
+            Difficulty game_difficulty = (Difficulty)Helpers.GetGameDifficulty();
+            int multiplier = game_difficulty == Difficulty.Easy ? 1 : game_difficulty == Difficulty.Medium ? 100 : 1000;
+
+            stopwatch.Start();
             for (int i = 0; i < 5; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Subtraction selected");
-                first_number = random.Next(1, 9);
-                second_number = random.Next(1, 9);
+                first_number = random.Next(1 * multiplier, 9 * multiplier);
+                second_number = random.Next(1 * multiplier, 9 * multiplier);
                 Console.WriteLine($"{first_number} - {second_number} : ");
                 var result = Console.ReadLine();
 
@@ -148,10 +172,11 @@ namespace Math_Games
                     Console.ReadLine();
                 }
             }
+            stopwatch.Stop();
 
             Console.WriteLine($"your score is: {score}");
             Console.ReadLine();
-            Helpers.AddToHistory(score, GameType.Subtraction);
+            Helpers.AddToHistory(score, GameType.Subtraction, game_difficulty, stopwatch.Elapsed);
         }
 
         internal void AdditionGame()
@@ -160,13 +185,18 @@ namespace Math_Games
             int first_number;
             int second_number;
             int score = 0;
+            var stopwatch = new Stopwatch();
 
+            Difficulty game_difficulty = (Difficulty)Helpers.GetGameDifficulty();
+            int multiplier = game_difficulty == Difficulty.Easy ? 1 : game_difficulty == Difficulty.Medium ? 100 : 1000;
+
+            stopwatch.Start();
             for (int i = 0; i < 5; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Addition selected");
-                first_number = random.Next(1, 9);
-                second_number = random.Next(1, 9);
+                first_number = random.Next(1 * multiplier, 9 * multiplier);
+                second_number = random.Next(1 * multiplier, 9 * multiplier);
                 Console.WriteLine($"{first_number} + {second_number} : ");
                 var result = Console.ReadLine();
 
@@ -185,10 +215,11 @@ namespace Math_Games
                     Console.ReadLine();
                 }
             }
+            stopwatch.Stop();
 
             Console.WriteLine($"your score is: {score}. PRess any key to go back to the main menu.");
             Console.ReadLine();
-            Helpers.AddToHistory(score, GameType.Addition);
+            Helpers.AddToHistory(score, GameType.Addition, game_difficulty, stopwatch.Elapsed);
         }
     }
 }

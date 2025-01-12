@@ -60,5 +60,7 @@
             } while (is_game_on);
 
         }
+            
     }
+
 }
